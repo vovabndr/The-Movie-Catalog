@@ -12,10 +12,20 @@ struct Movie {
     
     var name: String?
     var imageURL: String?
+    var overview:String?
+    var vote:Double?
+    var genres:[Int]?
+    var backdrop:String?
+    var release: String?
     
-    init(name: String,image:String) {
-        self.name = name
-        self.imageURL = image
+    init(dict: [String:AnyObject]) {
+        self.name = (dict["title"] as! String)
+        self.imageURL = (dict["poster_path"] as! String)
+        self.overview = (dict["overview"] as! String)
+        self.genres = (dict["genre_ids"] as! [Int])
+        self.backdrop = (dict["backdrop_path"] as! String) 
+        self.vote = (dict["vote_average"] as! Double)
+        self.release = (dict["release_date"] as! String)
     }
     
 }

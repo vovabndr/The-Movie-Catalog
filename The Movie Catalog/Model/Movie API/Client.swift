@@ -18,10 +18,13 @@ class Client{
     
     var movieList = [Movie]()
 
+//
+    var i = 1
+//
     func getPopular(handler: @escaping (_ image: [Movie])->()){
-    var request = URLRequest(url: URL(string: "https://api.themoviedb.org/3/movie/popular?page=1&language=en-US&api_key=ca39b37eb03cb3bfcfb10578c70e6468")!)
+    var request = URLRequest(url: URL(string: "https://api.themoviedb.org/3/movie/popular?page=\(i)&language=en&api_key=ca39b37eb03cb3bfcfb10578c70e6468")!)
         request.httpMethod = "GET"
-        
+        i = i + 1
         
         let dataTask = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
@@ -29,7 +32,7 @@ class Client{
             if (error != nil) {
                 print(error as Any)
             } else {
-                let httpResponse = response as? HTTPURLResponse
+//                let httpResponse = response as? HTTPURLResponse
 //                print(httpResponse as Any)
             }
             
@@ -41,16 +44,17 @@ class Client{
             }
             
             let results = parsed!["results"] as? [[String:AnyObject]]
-            
 //            self.movieList.removeAll()
-            for r in results!{
-                self.movieList.append(Movie(name: r["title"]! as! String,
-                                       image: "https://image.tmdb.org/t/p/w780"+(r["poster_path"]! as! String)))
+            for result in results!{
+                self.movieList.append(Movie(dict: result))
             }
            
             handler(self.movieList)
         }
         dataTask.resume()
     }
+
+    
+    
     
 }
