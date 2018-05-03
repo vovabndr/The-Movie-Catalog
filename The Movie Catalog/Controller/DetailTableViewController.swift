@@ -7,18 +7,21 @@
 //
 
 import UIKit
-import CoreData
 
 class DetailTableViewController: UITableViewController {
 
     var Movie: Movie?
-
+    //MARK: - Outlets
     @IBOutlet weak var imageView: UIImageView!
-//        {
-//        didSet{
-//            imageView.addImageFromURL(urlMovie: Movie?.backdrop)
-//        }
-//    }
+        {
+        didSet{
+            if Movie?.backdrop is String{
+            imageView.addImageFromURL(urlMovie: (Movie?.backdrop as! String))
+            }else if Movie?.backdrop is Data{
+                imageView.image = UIImage(data: (Movie?.backdrop)! as! Data)
+            }
+        }
+    }
     @IBOutlet weak var movieName: UILabel!{
         didSet{
             movieName.text = Movie?.name
@@ -49,116 +52,34 @@ class DetailTableViewController: UITableViewController {
         }
     }
     @IBOutlet weak var favouriteButton: UIButton!
-
     
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.tabBar.isHidden = true
-
+        CD.shared.appDelegate = UIApplication.shared.delegate as? AppDelegate
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         self.tabBarController?.tabBar.isHidden = true
         self.title = Movie?.name
-        
+        setButton()
     }
-    
-    
     @IBAction func AddButton(_ sender: UIButton) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Film", in: context)
-        let newMovie = NSManagedObject(entity: entity!, insertInto: context)
-
-        newMovie.setValue(self.Movie?.name, forKey: "name")
-        newMovie.setValue(self.Movie?.overview, forKey: "overview")
-        newMovie.setValue(self.Movie?.overview, forKey: "date")
-        newMovie.setValue(self.Movie?.vote, forKey: "vote")
-        newMovie.setValue(self.Movie?.genres, forKey: "genres")
-        
-        if let poster = try? Data(contentsOf: URL(string: "https://image.tmdb.org/t/p/w780"+(self.Movie?.imageURL)!)!),
-        let backdrop = try? Data(contentsOf: URL(string: "https://image.tmdb.org/t/p/w780"+(self.Movie?.backdrop)!)!){
-            newMovie.setValue(poster, forKey: "image")
-            newMovie.setValue(backdrop, forKey: "imagebackdrop")
-            }
-        do {
-            try context.save()
-        } catch {
-            print("Failed saving")
+        if !CD.shared.checkID((self.Movie?.id!)!){
+            CD.shared.save(self.Movie!)
+            setButton()
         }
     }
     
-
-    
+    func setButton(){
+        if CD.shared.checkID((self.Movie?.id!)!){
+            favouriteButton.isEnabled = false
+            favouriteButton.setTitle("remove from favourite", for: .normal)
+        }else{
+            
+        }
+        
     }
-
-
-
-    // MARK: - Table view data source
-
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 0
-//    }
-//
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        // #warning Incomplete implementation, return the number of rows
-//        return 0
-//    }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-
+}

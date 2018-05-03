@@ -24,14 +24,14 @@ class SearchViewController: UIViewController {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(Tap) )
         tapRecognizer.delegate = self
         view.addGestureRecognizer(tapRecognizer)
-        searchSegmentControl.addTarget(self, action: #selector(search(_:)), for: .valueChanged)
+        searchSegmentControl.addTarget(self, action: #selector(search), for: .valueChanged)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         self.tabBarController?.tabBar.isHidden = false
-
     }
+    
     @objc func Tap(_ recognizer: UITapGestureRecognizer) {
         view.endEditing(true)
     }
@@ -51,8 +51,6 @@ class SearchViewController: UIViewController {
             break
         }
     }
-    
-
 }
 
 extension SearchViewController: UIGestureRecognizerDelegate {
@@ -105,6 +103,4 @@ extension SearchViewController: UISearchBarDelegate{
             self.movieTableView.reloadData()
         }
     }
-    
 }
-

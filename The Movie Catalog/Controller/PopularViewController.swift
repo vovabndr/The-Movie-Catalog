@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class PopularViewController: UIViewController {
 
     
     @IBOutlet weak var MovieCollectionView: UICollectionView!
@@ -33,20 +33,16 @@ class ViewController: UIViewController {
                 self.MovieList.append(movie)                
             }
             DispatchQueue.main.async {
-                    self.MovieCollectionView.reloadData()
+                self.MovieCollectionView.reloadData()
            }
         }
     }
 }
 
 
-extension ViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+extension PopularViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return MovieList.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return true
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -65,8 +61,6 @@ extension ViewController:UICollectionViewDelegate,UICollectionViewDataSource,UIC
         let movie = MovieList[indexPath.row]
         let controller = storyboard!.instantiateViewController(withIdentifier: "DetailTableViewController") as! DetailTableViewController
         controller.Movie = movie
-        controller.imageView.image = #imageLiteral(resourceName: "background")
-
         navigationController!.pushViewController(controller, animated: true)
     }
     

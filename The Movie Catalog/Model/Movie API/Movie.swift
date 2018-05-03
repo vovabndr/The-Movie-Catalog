@@ -14,16 +14,18 @@ struct Movie {
     var overview:String?
     var vote:Double?
     var genres:[Int]?
-    var backdrop:String?
+    var backdrop:AnyObject?
     var release: String?
+    var id: Int?
     
     init(dict: [String:AnyObject]) {
         self.name = (dict["title"] as! String)
         self.overview = (dict["overview"] as! String)
         self.genres = (dict["genre_ids"] as! [Int])
         self.imageURL = (dict["poster_path"] as? String)
-        self.backdrop = dict["backdrop_path"] as? String
+        self.backdrop = dict["backdrop_path"] 
         self.vote = (dict["vote_average"] as! Double)
         self.release = (dict["release_date"] as! String)
+        self.id = (dict["id"] as! Int)
     }
 }

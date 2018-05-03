@@ -11,8 +11,9 @@
 		3152FCB720970674001D8955 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3152FCB620970674001D8955 /* SearchViewController.swift */; };
 		316CB80C2094DBC000C60581 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316CB80B2094DBC000C60581 /* RatingView.swift */; };
 		31722DF9209B152B00486803 /* The Movie Catalog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 31722DF7209B152B00486803 /* The Movie Catalog.xcdatamodeld */; };
+		31722DFC209B7FB200486803 /* CD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31722DFB209B7FB200486803 /* CD.swift */; };
 		3195D51120923AAB00D38467 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3195D51020923AAB00D38467 /* AppDelegate.swift */; };
-		3195D51320923AAB00D38467 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3195D51220923AAB00D38467 /* ViewController.swift */; };
+		3195D51320923AAB00D38467 /* PopularViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3195D51220923AAB00D38467 /* PopularViewController.swift */; };
 		3195D51620923AAB00D38467 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3195D51420923AAB00D38467 /* Main.storyboard */; };
 		3195D51820923AAD00D38467 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3195D51720923AAD00D38467 /* Assets.xcassets */; };
 		3195D51B20923AAD00D38467 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3195D51920923AAD00D38467 /* LaunchScreen.storyboard */; };
@@ -29,9 +30,10 @@
 		3152FCB620970674001D8955 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		316CB80B2094DBC000C60581 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		31722DF8209B152B00486803 /* The Movie Catalog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "The Movie Catalog.xcdatamodel"; sourceTree = "<group>"; };
+		31722DFB209B7FB200486803 /* CD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CD.swift; sourceTree = "<group>"; };
 		3195D50D20923AAB00D38467 /* The Movie Catalog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The Movie Catalog.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3195D51020923AAB00D38467 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3195D51220923AAB00D38467 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3195D51220923AAB00D38467 /* PopularViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularViewController.swift; sourceTree = "<group>"; };
 		3195D51520923AAB00D38467 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3195D51720923AAD00D38467 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3195D51A20923AAD00D38467 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -55,6 +57,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		31722DFA209B7F8400486803 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				31722DF7209B152B00486803 /* The Movie Catalog.xcdatamodeld */,
+				31722DFB209B7FB200486803 /* CD.swift */,
+			);
+			path = "Core Data";
+			sourceTree = "<group>";
+		};
 		3195D50420923AAB00D38467 = {
 			isa = PBXGroup;
 			children = (
@@ -82,7 +93,6 @@
 				3195D51420923AAB00D38467 /* Main.storyboard */,
 				3195D51720923AAD00D38467 /* Assets.xcassets */,
 				3195D51920923AAD00D38467 /* LaunchScreen.storyboard */,
-				31722DF7209B152B00486803 /* The Movie Catalog.xcdatamodeld */,
 				3195D51C20923AAD00D38467 /* Info.plist */,
 			);
 			path = "The Movie Catalog";
@@ -91,7 +101,7 @@
 		3195D52220923B5F00D38467 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				3195D51220923AAB00D38467 /* ViewController.swift */,
+				3195D51220923AAB00D38467 /* PopularViewController.swift */,
 				3152FCB620970674001D8955 /* SearchViewController.swift */,
 				31DD362B20984B56000663CC /* DetailTableViewController.swift */,
 				31B8EBEC209983DD00CFAA55 /* FavouriteViewController.swift.swift */,
@@ -103,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				31BB5A362092437400930CB7 /* Movie API */,
+				31722DFA209B7F8400486803 /* Core Data */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -207,8 +218,9 @@
 			files = (
 				3152FCB720970674001D8955 /* SearchViewController.swift in Sources */,
 				31DD362C20984B56000663CC /* DetailTableViewController.swift in Sources */,
-				3195D51320923AAB00D38467 /* ViewController.swift in Sources */,
+				3195D51320923AAB00D38467 /* PopularViewController.swift in Sources */,
 				31BB5A3A209246A300930CB7 /* Constants.swift in Sources */,
+				31722DFC209B7FB200486803 /* CD.swift in Sources */,
 				31722DF9209B152B00486803 /* The Movie Catalog.xcdatamodeld in Sources */,
 				3152FCB52096E472001D8955 /* UiimgeFromUrl.swift in Sources */,
 				3195D51120923AAB00D38467 /* AppDelegate.swift in Sources */,
@@ -360,6 +372,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F237XF6376;
 				INFOPLIST_FILE = "The Movie Catalog/Info.plist";
@@ -369,6 +382,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "vbbv.The-Movie-Catalog";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -378,6 +392,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F237XF6376;
 				INFOPLIST_FILE = "The Movie Catalog/Info.plist";
@@ -387,6 +402,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "vbbv.The-Movie-Catalog";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
