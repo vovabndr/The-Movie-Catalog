@@ -21,7 +21,6 @@ class RatingView: UIView {
         backView.backgroundColor = .red
         addSubview(backView)
         self.backgroundColor = .black
-        
         for i in 0...9{
             let star = UIImageView(image: UIImage(named: "star"))
             star.frame = CGRect(x: CGFloat( self.frame.width/10 * CGFloat(i)), y: CGFloat(0), width: self.frame.width/10, height: self.frame.height)

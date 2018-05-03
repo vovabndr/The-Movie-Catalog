@@ -10,5 +10,7 @@ import Foundation
 
 struct Constants {
     static let ApiKey = "ca39b37eb03cb3bfcfb10578c70e6468"
-    
+    static let ApiScheme = "https"
+    static let ApiHost = "api.themoviedb.org"
+    static let ApiPath = "/3"
 }

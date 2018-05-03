@@ -9,10 +9,14 @@
 import UIKit
 extension UIImageView{
 
-    func addImageFromURL(urlMovie: String) {
+    func addImageFromURL(urlMovie: String?) {
+        if urlMovie == nil{
+            self.image = #imageLiteral(resourceName: "background")
+            return
+        }
         DispatchQueue.global(qos: .userInitiated).async {
             //
-            if let url = URL(string: "https://image.tmdb.org/t/p/w780/"+urlMovie),
+            if let url = URL(string: "https://image.tmdb.org/t/p/w780"+urlMovie!),
                 //
                 let imgData = try? Data(contentsOf: url),
                 let img = UIImage(data: imgData){
