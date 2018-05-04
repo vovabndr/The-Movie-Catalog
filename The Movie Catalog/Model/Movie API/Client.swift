@@ -15,44 +15,14 @@ class Client{
     
     var session = URLSession.shared
     
-    func getPopular(_ page: Int,handler: @escaping (_ image: [Movie])->()){
-        let url = makeUrl(["api_key" :Constants.ApiKey as String as AnyObject,
-                           "page":"\(page)" as AnyObject],withPathExtension: "/movie/popular")
-        let request = URLRequest(url: url)
-        let dataTask = session.dataTask(with: request as URLRequest) { (data, response, error) in
-            guard error == nil else {
-                print(error as Any)
-                return
-            }
-        var parsed : [String:AnyObject]?
-            do {
-                parsed =  try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String : AnyObject]
-            } catch let error as NSError {
-                print(error.localizedDescription)
-            }
-            
-            let results = parsed!["results"] as? [[String:AnyObject]]
-            var findedMovie = [Movie]()
-            for result in results!{
-                findedMovie.append(Movie(dict: result))
-            }
-            handler(findedMovie)
-        }
-        dataTask.resume()
-    }
-    
-    
-    func searchMovies(_ searchString: String, completion: @escaping (_ result: [Movie])->() ){
-        let url = makeUrl(["api_key" :Constants.ApiKey as String as AnyObject,
-                           "query":searchString as String as AnyObject],
-                            withPathExtension: "/search/movie")
+    func GETMovies(_ withPath : String,_ parameters: [String:AnyObject], completion: @escaping (_ result: [Movie] )->()){
+        let url = makeUrl(parameters,withPathExtension: withPath)
         let request = URLRequest(url: url)
         let dataTask = session.dataTask(with: request) { (data, response, error) in
             guard (error == nil) else {
                 print("Error with your request: \(error!)")
                 return
             }
-            
             var parsedResult: [String:AnyObject]?
             do {
                 parsedResult = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:AnyObject]
@@ -60,7 +30,6 @@ class Client{
                 print(error.localizedDescription)
             }
             let results = parsedResult!["results"] as? [[String:AnyObject]]
-
             var searchMovie = [Movie]()
             for result in results!{
                 searchMovie.append(Movie(dict: result))
@@ -76,6 +45,8 @@ class Client{
         components.host = Constants.ApiHost
         components.path = Constants.ApiPath + (withPathExtension ?? "")
         components.queryItems = [URLQueryItem]()
+        let apikey = URLQueryItem(name: "api_key", value: Constants.ApiKey)
+        components.queryItems?.append(apikey)
         for (key, value) in parameters {
             let queryItem = URLQueryItem(name: key, value: "\(value)")
             components.queryItems!.append(queryItem)
@@ -83,48 +54,12 @@ class Client{
         return components.url!
     }
     
-    func getGenre(_ GenreID: Int) -> String{
-        switch GenreID {
-        case 28:
-            return "Action"
-        case 12:
-            return "Adventure"
-        case 16:
-            return "Animation"
-        case 35:
-            return "Comedy"
-        case 80:
-            return "Crime"
-        case 99:
-            return "Documentary"
-        case 18:
-            return "Drama"
-        case 10751:
-            return "Family"
-        case 14:
-            return "Fantasy"
-        case 36:
-            return "History"
-        case 27:
-            return "Horror"
-        case 10402:
-            return "Music"
-        case 9648:
-            return "Mystery"
-        case 10749:
-            return "Romance"
-        case 878:
-            return "Science Fiction"
-        case 10770:
-            return "TV Movie"
-        case 53:
-            return "Thriller"
-        case 10752:
-            return "War"
-        case 37:
-            return "Western"
-        default:
-            return ""
-        }
+    
+    func getGenre()->[String:Int]{
+        return ["Action":28,"Adventure":12,"Animation":16,"Comedy":35,
+                "Crime":80,"Documentary":99,"Drama":18,"Western":37,
+                "Fantasy":14,"History":36,"Horror":27,"Thriller":53,
+                "Science Fiction":878,"Mystery":9648,"Music":10402,
+                "Romance":10749,"TV Movie":10770,"Family":10751,"War":10752]
     }
 }

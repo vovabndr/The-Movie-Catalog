@@ -46,8 +46,12 @@ class DetailTableViewController: UITableViewController {
     @IBOutlet weak var genre: UILabel!{
         didSet{
             genre.text?.removeAll()
-            for genr in (Movie?.genres)!{
-                genre.text?.append( " " + Client.shared.getGenre(genr) + ",")
+            for (key,value) in Client.shared.getGenre(){
+                for genr in (Movie?.genres)!{
+                    if genr==value{
+                        genre.text?.append(" " + key + ",")
+                    }
+                }
             }
             genre.text =  String((genre.text?.dropLast())!)
         }

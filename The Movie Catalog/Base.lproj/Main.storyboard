@@ -397,7 +397,7 @@
             </objects>
             <point key="canvasLocation" x="484" y="862"/>
         </scene>
-        <!--Favourite View Controller-->
+        <!--Favorite-->
         <scene sceneID="tBw-R1-Cn2">
             <objects>
                 <viewController storyboardIdentifier="dropDownViewController" id="nEb-K0-XjH" customClass="FavouriteViewController" customModule="The_Movie_Catalog" customModuleProvider="target" sceneMemberID="viewController">
@@ -431,7 +431,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5yx-MV-yjy"/>
                     </view>
-                    <navigationItem key="navigationItem" id="CeV-ec-16s"/>
+                    <navigationItem key="navigationItem" title="Favorite" id="CeV-ec-16s"/>
                     <connections>
                         <outlet property="dropTable" destination="KL0-X8-XeH" id="8e5-c1-6MC"/>
                     </connections>

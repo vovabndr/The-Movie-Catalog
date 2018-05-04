@@ -20,6 +20,8 @@ class PopularViewController: UIViewController {
         super.viewDidLoad()
         MovieCollectionView.dataSource = self
         MovieCollectionView.delegate = self
+        
+
     }
     //MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
@@ -33,7 +35,7 @@ class PopularViewController: UIViewController {
     }
     
     func update(){
-        Client.shared.getPopular(self.MovieList.count/20 + 1) { movies in
+        Client.shared.GETMovies("/movie/popular", ["page" : self.MovieList.count/20 + 1 as AnyObject]){ movies in
             for movie in movies{
                 self.MovieList.append(movie)                
             }

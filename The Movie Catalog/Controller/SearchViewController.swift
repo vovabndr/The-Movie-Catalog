@@ -37,20 +37,22 @@ class SearchViewController: UIViewController {
     }
     
     @objc func search(_ sender: UISegmentedControl){
-        print("segment change")
         switch searchSegmentControl.selectedSegmentIndex {
         case 0:
-            print(0)
+            searchBar.keyboardType = .default
             break
         case 1:
-            print(1)
+            searchBar.keyboardType = .default
             break
         case 2:
-            print(2)
+            searchBar.keyboardType = .numberPad
             break
         default:
             break
         }
+        clear()
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
     }
 }
 
@@ -67,10 +69,12 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieSearchCell", for: indexPath) as UITableViewCell
-        let year = String((searchMovie[indexPath.row].release?.prefix(4))!)
-        cell.textLabel?.text =  searchMovie[indexPath.row].name! + "(\(year))"
+        cell.textLabel?.text = "\(indexPath.row)  " + searchMovie[indexPath.row].name!
+        if indexPath.row == searchMovie.count - 1 {//, searchMovie.count < 100{
+            searching()
+        }
+        
         return cell
     }
     
@@ -81,6 +85,13 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource{
         controller.Movie = movie
         navigationController!.pushViewController(controller, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 && searchMovie.count != 0{
+            return "Search for \(searchBar.text!)"
+        }
+        return ""
+    }
 
 }
 
@@ -89,21 +100,76 @@ extension SearchViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searching()
         resignFirstResponder()
+        clear()
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searching()
+        clear()
     }
+    func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if range.location > 3 && searchSegmentControl.selectedSegmentIndex == 2{
+            return false
+        }else{
+            return true
+        }
+    }
+    
     func searching(){
-        if searchBar.text != "" {
-        Client.shared.searchMovies(searchBar.text!) { (movies) in
-            self.searchMovie = movies
+        if searchBar.text == "" {
+            searchMovie.removeAll()
+            movieTableView.reloadData()
+            return
+        }
+        
+        var query = [String:AnyObject]()
+        query["page"] = searchMovie.count/20 + 1 as AnyObject
+        var parameter = String()
+        switch searchSegmentControl.selectedSegmentIndex {
+        case 0:
+            query["query"] = searchBar.text! as AnyObject
+            parameter = "/search/movie"
+            break
+        case 1:
+            var genId = Int()
+            parameter = "/discover/movie"
+
+            for genre in Client.shared.getGenre(){
+                if searchBar.text!.lowercased().range(of: genre.key.lowercased()) != nil{
+                    genId = genre.value
+                }
+            }
+            query["with_genres"] = genId as AnyObject
+            break
+        case 2:
+            if let year = Int(searchBar.text!), searchBar.text?.count == 4, year > 1600 {
+            query["primary_release_year"] = year as AnyObject
+            parameter = "/discover/movie"
+            }else{
+                return
+            }
+            break
+        default:
+            return
+        }
+        
+        Client.shared.GETMovies(parameter, query){ movies in
+            if movies.count == 0 {
+                return
+            }
+            for movie in movies{
+                self.searchMovie.append(movie)
+            }
             DispatchQueue.main.async {
                 self.movieTableView.reloadData()
                 }
             }
-        } else{
-            searchMovie.removeAll()
-            movieTableView.reloadData()
+        
         }
+    
+    func clear(){
+        searchMovie.removeAll()
+        movieTableView.reloadData()
     }
+    
 }
+
