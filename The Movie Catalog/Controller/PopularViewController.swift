@@ -39,7 +39,7 @@ class PopularViewController: UIViewController {
     }
 }
 
-
+// MARK: - CollectionView Delegate,DataSource
 extension PopularViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return MovieList.count

@@ -14,13 +14,10 @@ class Client{
     static let shared = Client()
     
     var session = URLSession.shared
-//    var movieList = [Movie]()
     
-
     func getPopular(_ page: Int,handler: @escaping (_ image: [Movie])->()){
-        let url = makeUrl(["api_key" :Constants.ApiKey as String as AnyObject,"page":"\(page)" as AnyObject],
-                          withPathExtension: "/movie/popular")
-        
+        let url = makeUrl(["api_key" :Constants.ApiKey as String as AnyObject,
+                           "page":"\(page)" as AnyObject],withPathExtension: "/movie/popular")
         let request = URLRequest(url: url)
         let dataTask = session.dataTask(with: request as URLRequest) { (data, response, error) in
             guard error == nil else {
@@ -35,13 +32,10 @@ class Client{
             }
             
             let results = parsed!["results"] as? [[String:AnyObject]]
-            
             var findedMovie = [Movie]()
-//            self.movieList.removeAll()
             for result in results!{
                 findedMovie.append(Movie(dict: result))
             }
-           
             handler(findedMovie)
         }
         dataTask.resume()
@@ -65,19 +59,15 @@ class Client{
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
-            
             let results = parsedResult!["results"] as? [[String:AnyObject]]
 
             var searchMovie = [Movie]()
             for result in results!{
                 searchMovie.append(Movie(dict: result))
             }
-            
             completion(searchMovie)
         }
         dataTask.resume()
-        
-        
     }
     
     private func makeUrl(_ parameters: [String:AnyObject], withPathExtension: String? = nil) -> URL {
@@ -92,31 +82,6 @@ class Client{
         }
         return components.url!
     }
-    struct Genre {
-        var name: String
-        var id: Int
-    }
-    var genres = [Genre]()
-    func getGenres(_ handler: @escaping ()->()){
-        let url = URL(string: "https://api.themoviedb.org/3/genre/movie/list?api_key=ca39b37eb03cb3bfcfb10578c70e6468&language=en-US")
-        let request = URLRequest(url: url!)
-        session.dataTask(with: request) { (data, urlresponse, error) in
-            guard error == nil else {return}
-            var parsedres = [String:AnyObject]()
-            do{
-                parsedres = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String:AnyObject]
-            }catch let error {
-                print(error.localizedDescription)
-                return
-            }
-            let results = parsedres["genres"] as! [[String:AnyObject]]
-            for result in results{
-                self.genres.append(Genre(name: result["name"] as! String, id: result["id"] as! Int))
-            }
-            handler()
-        }.resume()
-    }
-
     
     func getGenre(_ GenreID: Int) -> String{
         switch GenreID {

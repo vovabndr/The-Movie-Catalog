@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class FavouriteViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+class FavouriteViewController: UIViewController {
     @IBOutlet weak var dropTable: UITableView!
     
     var favourites: [NSManagedObject] = []
@@ -22,10 +22,10 @@ class FavouriteViewController: UIViewController,UITableViewDataSource,UITableVie
         refreshControl.addTarget(self, action:#selector(handleRefresh),for: .valueChanged)
         CD.shared.appDelegate = UIApplication.shared.delegate as? AppDelegate
     }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
-        CD.shared.fetch { (result) in
+        CD.shared.fetch { result in
             self.favourites = result
             self.dropTable.reloadData()
         }
@@ -35,6 +35,9 @@ class FavouriteViewController: UIViewController,UITableViewDataSource,UITableVie
         self.dropTable.reloadData()
         refreshControl.endRefreshing()
     }
+}
+    // MARK: - Delegate, DataSource
+extension FavouriteViewController:UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return favourites.count
     }
@@ -54,11 +57,22 @@ class FavouriteViewController: UIViewController,UITableViewDataSource,UITableVie
         controller.Movie = Movie(dict: [ "title": movie.value(forKey: "name") as AnyObject,
                                          "overview":movie.value(forKey: "overview") as AnyObject,
                                          "genre_ids":movie.value(forKey: "genres") as AnyObject,
-                                         "poster_path":"" as AnyObject,
-                                         "backdrop_path":movie.value(forKey: "imagebackdrop") as AnyObject,
+                                         "poster_path":movie.value(forKey: "imageURL") as AnyObject,
+                                         "back":movie.value(forKey: "imagebackdrop") as AnyObject,
+                                         "backdrop_path":movie.value(forKey: "backdropURL") as AnyObject,
                                          "vote_average":movie.value(forKey: "vote") as AnyObject,
                                          "release_date":movie.value(forKey: "date") as AnyObject,
                                          "id":movie.value(forKey: "id") as AnyObject])
         navigationController!.pushViewController(controller, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            CD.shared.delete(index: indexPath.row, manageObj: favourites)
+            CD.shared.fetch { res in
+                self.favourites = res
+                self.dropTable.reloadData()
+            }
+        }
     }
 }

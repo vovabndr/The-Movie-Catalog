@@ -59,7 +59,7 @@ extension SearchViewController: UIGestureRecognizerDelegate {
     }
 }
 
-
+    // MARK: - TableView Delegate,DataSource
 extension SearchViewController: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchMovie.count 
@@ -81,7 +81,7 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource{
     }
 }
 
-
+    // MARK: - SearchBarDelegate
 extension SearchViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searching()

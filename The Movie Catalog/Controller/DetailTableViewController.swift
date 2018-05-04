@@ -15,11 +15,12 @@ class DetailTableViewController: UITableViewController {
     @IBOutlet weak var imageView: UIImageView!
         {
         didSet{
-            if Movie?.backdrop is String{
-            imageView.addImageFromURL(urlMovie: (Movie?.backdrop as! String))
-            }else if Movie?.backdrop is Data{
-                imageView.image = UIImage(data: (Movie?.backdrop)! as! Data)
+            if let imagedata = Movie?.backdropData as? Data{
+                imageView.image = UIImage(data: imagedata)
+            }else{
+                imageView.addImageFromURL(urlMovie: Movie?.backdrop)
             }
+            
         }
     }
     @IBOutlet weak var movieName: UILabel!{
@@ -58,27 +59,40 @@ class DetailTableViewController: UITableViewController {
         super.viewDidLoad()
         self.tabBarController?.tabBar.isHidden = true
         CD.shared.appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         self.tabBarController?.tabBar.isHidden = true
         self.title = Movie?.name
         setButton()
     }
+    //MARK: - Button
     @IBAction func AddButton(_ sender: UIButton) {
         if !CD.shared.checkID((self.Movie?.id!)!){
             CD.shared.save(self.Movie!)
             setButton()
+        }else{
+            let alert = UIAlertController(title: "Remove \"\(String(describing: (Movie?.name!)!))\" from favourites?",message: nil,preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Remove", style: .default){_ in
+                CD.shared.fetch(handle: { (res) in
+                    CD.shared.deleteByID(filmID: (self.Movie?.id!)!, manageObj: res)
+                    self.setButton()
+                })
+            })
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
     func setButton(){
         if CD.shared.checkID((self.Movie?.id!)!){
-            favouriteButton.isEnabled = false
-            favouriteButton.setTitle("remove from favourite", for: .normal)
+            favouriteButton.setTitleColor(.red, for: .normal)
+            favouriteButton.setTitle("Remove from favourite".capitalized, for: .normal)
         }else{
-            
+            favouriteButton.setTitleColor(.black, for: .normal)
+            favouriteButton.setTitle("Add to favourite".capitalized, for: .normal)
         }
         
     }

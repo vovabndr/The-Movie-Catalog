@@ -235,8 +235,8 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ga5-mK-N66">
-                                                    <rect key="frame" x="132" y="6" width="110" height="30"/>
-                                                    <state key="normal" title="Add to fovourite"/>
+                                                    <rect key="frame" x="133" y="6" width="109" height="30"/>
+                                                    <state key="normal" title="Add to favourite"/>
                                                     <connections>
                                                         <action selector="AddButton:" destination="0NU-gs-Cgv" eventType="touchUpInside" id="JJY-FE-4ay"/>
                                                         <action selector="AddButton:" destination="0NU-gs-Cgv" eventType="touchUpOutside" id="dZi-Dx-3r2"/>
