@@ -27,8 +27,8 @@ class SearchViewController: UIViewController {
         searchSegmentControl.addTarget(self, action: #selector(search), for: .valueChanged)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
     }
     
@@ -37,6 +37,7 @@ class SearchViewController: UIViewController {
     }
     
     @objc func search(_ sender: UISegmentedControl){
+        print("segment change")
         switch searchSegmentControl.selectedSegmentIndex {
         case 0:
             print(0)
@@ -74,11 +75,13 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let movie = searchMovie[indexPath.row]
         let controller = storyboard!.instantiateViewController(withIdentifier: "DetailTableViewController") as! DetailTableViewController
         controller.Movie = movie
         navigationController!.pushViewController(controller, animated: true)
     }
+
 }
 
     // MARK: - SearchBarDelegate
@@ -99,8 +102,8 @@ extension SearchViewController: UISearchBarDelegate{
                 }
             }
         } else{
-            self.searchMovie.removeAll()
-            self.movieTableView.reloadData()
+            searchMovie.removeAll()
+            movieTableView.reloadData()
         }
     }
 }

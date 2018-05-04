@@ -15,16 +15,21 @@ class PopularViewController: UIViewController {
 
     var MovieList: [Movie] = []
     
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         MovieCollectionView.dataSource = self
         MovieCollectionView.delegate = self
     }
-    
+    //MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.tabBarController?.tabBar.isHidden = false
         update()
+    }
+    //MARK: - viewDidAppear
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     func update(){

@@ -57,11 +57,9 @@ class DetailTableViewController: UITableViewController {
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tabBarController?.tabBar.isHidden = true
         CD.shared.appDelegate = UIApplication.shared.delegate as? AppDelegate
-        
     }
-    
+    //MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.tabBarController?.tabBar.isHidden = true
@@ -74,7 +72,7 @@ class DetailTableViewController: UITableViewController {
             CD.shared.save(self.Movie!)
             setButton()
         }else{
-            let alert = UIAlertController(title: "Remove \"\(String(describing: (Movie?.name!)!))\" from favourites?",message: nil,preferredStyle: .alert)
+            let alert = UIAlertController(title: "Remove \"\(String(describing: (Movie?.name!)!))\" from favorites?",message: nil,preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Remove", style: .default){_ in
                 CD.shared.fetch(handle: { (res) in
                     CD.shared.deleteByID(filmID: (self.Movie?.id!)!, manageObj: res)
@@ -89,11 +87,13 @@ class DetailTableViewController: UITableViewController {
     func setButton(){
         if CD.shared.checkID((self.Movie?.id!)!){
             favouriteButton.setTitleColor(.red, for: .normal)
-            favouriteButton.setTitle("Remove from favourite".capitalized, for: .normal)
+            favouriteButton.setTitle("Remove from favorite".capitalized, for: .normal)
         }else{
             favouriteButton.setTitleColor(.black, for: .normal)
-            favouriteButton.setTitle("Add to favourite".capitalized, for: .normal)
+            favouriteButton.setTitle("Add to favorite".capitalized, for: .normal)
         }
         
     }
+
+    
 }

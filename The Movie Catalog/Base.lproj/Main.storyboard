@@ -139,7 +139,7 @@
         <scene sceneID="rwW-fs-w2f">
             <objects>
                 <tableViewController storyboardIdentifier="DetailTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0NU-gs-Cgv" customClass="DetailTableViewController" customModule="The_Movie_Catalog" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="w74-3J-jKj">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="plain" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" sectionFooterHeight="-1" id="w74-3J-jKj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -235,8 +235,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ga5-mK-N66">
-                                                    <rect key="frame" x="133" y="6" width="109" height="30"/>
-                                                    <state key="normal" title="Add to favourite"/>
+                                                    <rect key="frame" x="0.0" y="-1" width="375" height="43"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                    <state key="normal" title="Add to favorite"/>
                                                     <connections>
                                                         <action selector="AddButton:" destination="0NU-gs-Cgv" eventType="touchUpInside" id="JJY-FE-4ay"/>
                                                         <action selector="AddButton:" destination="0NU-gs-Cgv" eventType="touchUpOutside" id="dZi-Dx-3r2"/>
@@ -245,7 +246,9 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Ga5-mK-N66" firstAttribute="centerX" secondItem="F3U-e1-Gm8" secondAttribute="centerX" id="8Za-ge-U9g"/>
-                                                <constraint firstItem="Ga5-mK-N66" firstAttribute="centerY" secondItem="F3U-e1-Gm8" secondAttribute="centerY" id="XOb-jZ-onX"/>
+                                                <constraint firstItem="Ga5-mK-N66" firstAttribute="leading" secondItem="F3U-e1-Gm8" secondAttribute="leading" id="coQ-IB-uw3"/>
+                                                <constraint firstItem="Ga5-mK-N66" firstAttribute="centerY" secondItem="F3U-e1-Gm8" secondAttribute="centerY" id="dro-iM-QSb"/>
+                                                <constraint firstItem="Ga5-mK-N66" firstAttribute="top" secondItem="F3U-e1-Gm8" secondAttribute="topMargin" constant="-12" id="pPn-uc-bnE"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -260,7 +263,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S4W-1M-2Zz" customClass="RatingView" customModule="The_Movie_Catalog" customModuleProvider="target">
+                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S4W-1M-2Zz" customClass="RatingView" customModule="The_Movie_Catalog" customModuleProvider="target">
                                                     <rect key="frame" x="37" y="10" width="300" height="30"/>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -353,7 +356,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Kx-hm-YfC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3122" y="863"/>
+            <point key="canvasLocation" x="3277.5999999999999" y="861.3193403298352"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="g9P-Ou-d9O">
@@ -392,7 +395,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qJ2-Lv-wrw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="503" y="862"/>
+            <point key="canvasLocation" x="484" y="862"/>
         </scene>
         <!--Favourite View Controller-->
         <scene sceneID="tBw-R1-Cn2">
@@ -454,7 +457,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XaF-km-2PA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1677" y="863"/>
+            <point key="canvasLocation" x="1660" y="862"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="58Z-pc-Cds">

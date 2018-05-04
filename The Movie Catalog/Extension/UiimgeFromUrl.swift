@@ -15,9 +15,7 @@ extension UIImageView{
             return
         }
         DispatchQueue.global(qos: .userInitiated).async {
-            //
             if let url = URL(string: "https://image.tmdb.org/t/p/w780"+urlMovie!),
-                //
                 let imgData = try? Data(contentsOf: url),
                 let img = UIImage(data: imgData){
                 DispatchQueue.main.async{

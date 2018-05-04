@@ -11,9 +11,10 @@ import CoreData
 
 class FavouriteViewController: UIViewController {
     @IBOutlet weak var dropTable: UITableView!
-    
+   
     var favourites: [NSManagedObject] = []
     
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         dropTable.delegate = self
@@ -22,6 +23,8 @@ class FavouriteViewController: UIViewController {
         refreshControl.addTarget(self, action:#selector(handleRefresh),for: .valueChanged)
         CD.shared.appDelegate = UIApplication.shared.delegate as? AppDelegate
     }
+    //MARK: - viewWillAppear
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
@@ -30,12 +33,13 @@ class FavouriteViewController: UIViewController {
             self.dropTable.reloadData()
         }
     }
-    
+    //MARK: - Refresh Selecetor
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         self.dropTable.reloadData()
         refreshControl.endRefreshing()
     }
 }
+
     // MARK: - Delegate, DataSource
 extension FavouriteViewController:UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
