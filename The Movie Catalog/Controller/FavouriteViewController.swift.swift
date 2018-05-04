@@ -27,11 +27,14 @@ class FavouriteViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.tabBar.isHidden = false
         CD.shared.fetch { result in
             self.favourites = result
             self.dropTable.reloadData()
         }
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
     }
     //MARK: - Refresh Selecetor
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {

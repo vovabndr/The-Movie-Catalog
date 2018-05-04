@@ -44,6 +44,7 @@ class PopularViewController: UIViewController {
            }
         }
     }
+    
 }
 
 // MARK: - CollectionView Delegate,DataSource
@@ -70,10 +71,4 @@ extension PopularViewController:UICollectionViewDelegate,UICollectionViewDataSou
         controller.Movie = movie
         navigationController!.pushViewController(controller, animated: true)
     }
-    
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: view.bounds.width/3 - 5, height: view.bounds.height/3);
-//    }
 }

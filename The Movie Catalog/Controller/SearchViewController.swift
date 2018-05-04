@@ -70,11 +70,10 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieSearchCell", for: indexPath) as UITableViewCell
-        cell.textLabel?.text = "\(indexPath.row)  " + searchMovie[indexPath.row].name!
-        if indexPath.row == searchMovie.count - 1 {//, searchMovie.count < 100{
+        cell.textLabel?.text = searchMovie[indexPath.row].name!
+        if indexPath.row == searchMovie.count - 1 {
             searching()
         }
-        
         return cell
     }
     
@@ -87,12 +86,11 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 && searchMovie.count != 0{
-            return "Search for \(searchBar.text!)"
+        if  searchMovie.count != 0{
+            return "Search for \"\(searchBar.text!)\""
         }
         return ""
     }
-
 }
 
     // MARK: - SearchBarDelegate
@@ -113,14 +111,11 @@ extension SearchViewController: UISearchBarDelegate{
             return true
         }
     }
-    
     func searching(){
         if searchBar.text == "" {
-            searchMovie.removeAll()
-            movieTableView.reloadData()
+            clear()
             return
         }
-        
         var query = [String:AnyObject]()
         query["page"] = searchMovie.count/20 + 1 as AnyObject
         var parameter = String()
@@ -130,12 +125,11 @@ extension SearchViewController: UISearchBarDelegate{
             parameter = "/search/movie"
             break
         case 1:
-            var genId = Int()
+            var genId = String()
             parameter = "/discover/movie"
-
             for genre in Client.shared.getGenre(){
-                if searchBar.text!.lowercased().range(of: genre.key.lowercased()) != nil{
-                    genId = genre.value
+                if genre.key.lowercased().range(of: searchBar.text!.lowercased()) != nil{
+                    genId.append( "\(genre.value),")
                 }
             }
             query["with_genres"] = genId as AnyObject
@@ -151,7 +145,6 @@ extension SearchViewController: UISearchBarDelegate{
         default:
             return
         }
-        
         Client.shared.GETMovies(parameter, query){ movies in
             if movies.count == 0 {
                 return
@@ -163,9 +156,7 @@ extension SearchViewController: UISearchBarDelegate{
                 self.movieTableView.reloadData()
                 }
             }
-        
         }
-    
     func clear(){
         searchMovie.removeAll()
         movieTableView.reloadData()
