@@ -3,11 +3,11 @@
 
 ## Screenshots
 
-![alt text](https://imgur.com/LMDk4pT "Popular")
-![alt text](https://imgur.com/RpU7XfE "Detail")
-![alt text](https://imgur.com/l887tCj "Favorite")
+![alt text](https://i.imgur.com/7NCS8M0.png "Popular")
+![alt text](https://i.imgur.com/vh5vWvN.png"Detail")
+![alt text](https://i.imgur.com/wgVocq5.png "Favorite")
 
-![alt text](https://imgur.com/acrtTLu "Search by Movie")
-![alt text](https://imgur.com/bbd1W3c "Search by Genre")
-![alt text](https://imgur.com/knuA3VS "Search by Year")
+![alt text](https://i.imgur.com/Lb9Zgua.png "Search by Movie")
+![alt text](https://i.imgur.com/9eAwLME.png "Search by Genre")
+![alt text](https://i.imgur.com/mg4IxYM.png "Search by Year")
 
