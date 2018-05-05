@@ -37,6 +37,9 @@ class SearchViewController: UIViewController {
     }
     
     @objc func search(_ sender: UISegmentedControl){
+        clear()
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
         switch searchSegmentControl.selectedSegmentIndex {
         case 0:
             searchBar.keyboardType = .default
@@ -46,13 +49,11 @@ class SearchViewController: UIViewController {
             break
         case 2:
             searchBar.keyboardType = .numberPad
+            searchBar.becomeFirstResponder()
             break
         default:
             break
         }
-        clear()
-        searchBar.text = ""
-        searchBar.resignFirstResponder()
     }
 }
 
@@ -96,13 +97,13 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource{
     // MARK: - SearchBarDelegate
 extension SearchViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searching()
         resignFirstResponder()
         clear()
+        searching()
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searching()
         clear()
+        searching()
     }
     func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if range.location > 3 && searchSegmentControl.selectedSegmentIndex == 2{
