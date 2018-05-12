@@ -10,24 +10,23 @@ import UIKit
 
 class RatingView: UIView {
 
-    var backView = UIView()
-    
+    private var backView = UIView()
+
     override func draw(_ rect: CGRect) {
         super.draw(rect)
     }
-    
-    func set(vote: Double){
-        backView.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: CGFloat(vote)*(self.frame.width/10), height: self.frame.height)
+
+    func set(vote: Double) {
+        backView.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: CGFloat(vote)*(self.frame.width/10),
+                                height: self.frame.height)
         backView.backgroundColor = .red
         addSubview(backView)
         self.backgroundColor = .black
-        for i in 0...9{
+        for counter in 0...9 {
             let star = UIImageView(image: UIImage(named: "lilstar"))
-            star.frame = CGRect(x: CGFloat( self.frame.width/10 * CGFloat(i)), y: CGFloat(0), width: self.frame.width/10, height: self.frame.height)
+            star.frame = CGRect(x: CGFloat( self.frame.width/10 * CGFloat(counter)),
+                                y: CGFloat(0), width: self.frame.width/10, height: self.frame.height)
             addSubview(star)
         }
     }
-
- 
-
 }

@@ -7,18 +7,18 @@
 //
 
 import UIKit
-extension UIImageView{
+extension UIImageView {
 
     func addImageFromURL(urlMovie: String?) {
-        if urlMovie == nil{
+        if urlMovie == nil {
             self.image = #imageLiteral(resourceName: "background")
             return
         }
         DispatchQueue.global(qos: .userInitiated).async {
             if let url = URL(string: "https://image.tmdb.org/t/p/w780"+urlMovie!),
                 let imgData = try? Data(contentsOf: url),
-                let img = UIImage(data: imgData){
-                DispatchQueue.main.async{
+                let img = UIImage(data: imgData) {
+                DispatchQueue.main.async {
                     self.image =  img
                 }
             }

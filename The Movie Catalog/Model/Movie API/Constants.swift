@@ -9,7 +9,7 @@
 import Foundation
 
 struct Constants {
-    static let ApiKey = Bundle.main.infoDictionary!["API Key"] as! String
+    static let ApiKey = Bundle.main.infoDictionary!["API Key"] as? String
     static let ApiScheme = "https"
     static let ApiHost = "api.themoviedb.org"
     static let ApiPath = "/3"

@@ -8,38 +8,40 @@
 
 import Foundation
 
-class Client{
-    
-    //MARK: - Shared instance
+class Client {
+
+    // MARK: - Shared instance
     static let shared = Client()
-    
-    var session = URLSession.shared
-    
-    func GETMovies(_ withPath : String,_ parameters: [String:AnyObject], completion: @escaping (_ result: [Movie] )->()){
-        let url = makeUrl(parameters,withPathExtension: withPath)
+
+   private var session = URLSession.shared
+
+    func GETMovies(_ withPath: String, _ parameters: [String: AnyObject],
+                   completion: @escaping (_ result: [Movie] ) -> Void) {
+        let url = makeUrl(parameters, withPathExtension: withPath)
         let request = URLRequest(url: url)
-        let dataTask = session.dataTask(with: request) { (data, response, error) in
-            guard (error == nil) else {
-                print("Error with your request: \(error!)")
+        let dataTask = session.dataTask(with: request) { (data, _, error) in
+            guard error == nil else {
+                print("Error with your request: \(error.debugDescription)")
                 return
             }
-            var parsedResult: [String:AnyObject]?
+            var parsedResult: [String: AnyObject]?
             do {
-                parsedResult = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:AnyObject]
+                parsedResult = try JSONSerialization.jsonObject(with: data!,
+                                                                options: .allowFragments) as? [String: AnyObject]
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
-            let results = parsedResult!["results"] as? [[String:AnyObject]]
+            let results = parsedResult!["results"] as? [[String: AnyObject]]
             var searchMovie = [Movie]()
-            for result in results!{
+            for result in results! {
                 searchMovie.append(Movie(dict: result))
             }
             completion(searchMovie)
         }
         dataTask.resume()
     }
-    
-    private func makeUrl(_ parameters: [String:AnyObject], withPathExtension: String? = nil) -> URL {
+
+    private func makeUrl(_ parameters: [String: AnyObject], withPathExtension: String? = nil) -> URL {
         var components = URLComponents()
         components.scheme = Constants.ApiScheme
         components.host = Constants.ApiHost
@@ -53,13 +55,12 @@ class Client{
         }
         return components.url!
     }
-    
-    
-    func getGenre()->[String:Int]{
-        return ["Action":28,"Adventure":12,"Animation":16,"Comedy":35,
-                "Crime":80,"Documentary":99,"Drama":18,"Western":37,
-                "Fantasy":14,"History":36,"Horror":27,"Thriller":53,
-                "Science Fiction":878,"Mystery":9648,"Music":10402,
-                "Romance":10749,"TV Movie":10770,"Family":10751,"War":10752]
+
+    func getGenre() -> [String: Int] {
+        return ["Action": 28, "Adventure": 12, "Animation": 16, "Comedy": 35,
+                "Crime": 80, "Documentary": 99, "Drama": 18, "Western": 37,
+                "Fantasy": 14, "History": 36, "Horror": 27, "Thriller": 53,
+                "Science Fiction": 878, "Mystery": 9648, "Music": 10402,
+                "Romance": 10749, "TV Movie": 10770, "Family": 10751, "War": 10752]
     }
 }

@@ -10,76 +10,73 @@ import UIKit
 
 class DetailTableViewController: UITableViewController {
 
-    var Movie: Movie?
-    //MARK: - Outlets
-    @IBOutlet weak var imageView: UIImageView!
-        {
-        didSet{
-            if let imagedata = Movie?.backdropData as? Data{
+    var movie: Movie?
+    // MARK: - Outlets
+    @IBOutlet weak var imageView: UIImageView! {
+        didSet {
+            if let imagedata = movie?.backdropData as? Data {
                 imageView.image = UIImage(data: imagedata)
-            }else{
-                imageView.addImageFromURL(urlMovie: Movie?.backdrop)
+            } else {
+                imageView.addImageFromURL(urlMovie: movie?.backdrop)
             }
-            
+
         }
     }
-    @IBOutlet weak var movieName: UILabel!{
-        didSet{
-            movieName.text = Movie?.name
+    @IBOutlet weak var movieName: UILabel! {
+        didSet {
+            movieName.text = movie?.name
         }
     }
-    @IBOutlet weak var overview: UITextView!{
-        didSet{
-            overview.text = Movie?.overview
+    @IBOutlet weak var overview: UITextView! {
+        didSet {
+            overview.text = movie?.overview
         }
     }
-    @IBOutlet weak var ratingView: RatingView!{
-        didSet{
-            ratingView.set(vote: (Movie?.vote)!)
+    @IBOutlet weak var ratingView: RatingView! {
+        didSet {
+            ratingView.set(vote: (movie?.vote)!)
         }
     }
-    @IBOutlet weak var releaseDate: UILabel!{
-        didSet{
-            releaseDate.text = Movie?.release
+    @IBOutlet weak var releaseDate: UILabel! {
+        didSet {
+            releaseDate.text = movie?.release
         }
     }
-    @IBOutlet weak var genre: UILabel!{
-        didSet{
+    @IBOutlet weak var genre: UILabel! {
+        didSet {
             genre.text?.removeAll()
-            for (key,value) in Client.shared.getGenre(){
-                for genr in (Movie?.genres)!{
-                    if genr==value{
+            for (key, value) in Client.shared.getGenre() {
+                for genr in (movie?.genres)! where genr==value {
                         genre.text?.append(" " + key + ",")
-                    }
                 }
             }
             genre.text =  String((genre.text?.dropLast())!)
         }
     }
     @IBOutlet weak var favouriteButton: UIButton!
-    
-    //MARK: - viewDidLoad
+
+    // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        CD.shared.appDelegate = UIApplication.shared.delegate as? AppDelegate
     }
-    //MARK: - viewWillAppear
+    // MARK: - viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.tabBarController?.tabBar.isHidden = true
-        self.title = Movie?.name
+        self.title = movie?.name
         setButton()
     }
-    //MARK: - Button
-    @IBAction func AddButton(_ sender: UIButton) {
-        if !CD.shared.checkID((self.Movie?.id!)!){
-            CD.shared.save(self.Movie!)
+    // MARK: - Button
+    @IBAction func addButton(_ sender: UIButton) {
+        if !DataManage.shared.checkID((self.movie?.id)!) {
+            DataManage.shared.save( self.movie!)
             setButton()
-        }else{
-            let alert = UIAlertController(title: "Remove \"\(String(describing: (Movie?.name!)!))\" from favorites?",message: nil,preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Remove", style: .default){_ in
-                CD.shared.fetch(handle: { (res) in
-                    CD.shared.deleteByID(filmID: (self.Movie?.id!)!, manageObj: res)
+        } else {
+            let alert = UIAlertController(title: "Remove \"\(String(describing: movie?.name))\" from favorites?",
+                message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Remove", style: .default) {_ in
+                DataManage.shared.fetch(handle: { (res) in
+                    DataManage.shared.deleteByID(filmID: (self.movie?.id!)!, manageObj: res)
                     self.setButton()
                 })
             })
@@ -87,17 +84,16 @@ class DetailTableViewController: UITableViewController {
             self.present(alert, animated: true, completion: nil)
         }
     }
-    
-    func setButton(){
-        if CD.shared.checkID((self.Movie?.id!)!){
+
+    func setButton() {
+        if DataManage.shared.checkID((self.movie?.id!)!) {
             favouriteButton.setTitleColor(.red, for: .normal)
             favouriteButton.setTitle("Remove from favorite".capitalized, for: .normal)
-        }else{
+        } else {
             favouriteButton.setTitleColor(.black, for: .normal)
             favouriteButton.setTitle("Add to favorite".capitalized, for: .normal)
         }
-        
+
     }
 
-    
 }
