@@ -72,10 +72,11 @@ class DetailTableViewController: UITableViewController {
             DataManage.shared.save( self.movie!)
             setButton()
         } else {
-            let alert = UIAlertController(title: "Remove \"\(String(describing: movie?.name))\" from favorites?",
+            guard let name = movie?.name else { return  }
+            let alert = UIAlertController(title: "Remove \"\(name)\" from favorites?",
                 message: nil, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Remove", style: .default) {_ in
-                DataManage.shared.fetch(handle: { (res) in
+                DataManage.shared.fetch(handle: { res, _ in
                     DataManage.shared.deleteByID(filmID: (self.movie?.id!)!, manageObj: res)
                     self.setButton()
                 })

@@ -20,6 +20,7 @@ struct Movie {
     var id: Int?
     // swiftlint:enable all
     var backdropData: AnyObject?
+    var image: Data?
 
     init(dict: [String: AnyObject]) {
         self.name = (dict["title"] as? String)
@@ -32,6 +33,9 @@ struct Movie {
         self.id = (dict["id"] as? Int)
         if let backImage = (dict["back"] ) {
             self.backdropData = backImage
+        }
+        if let image = dict["image"] {
+            self.image = image as? Data
         }
     }
 }

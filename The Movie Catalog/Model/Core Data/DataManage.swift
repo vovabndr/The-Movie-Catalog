@@ -1,5 +1,5 @@
 //
-//  CD.swift
+//  DataManage.swift
 //  The Movie Catalog
 //
 //  Created by Владимир Бондарь on 5/3/18.
@@ -50,13 +50,26 @@ class DataManage {
 
     }
 
-    func fetch( handle: @escaping (_ result: [NSManagedObject]) -> Void) {
+    func fetch( handle: @escaping (_ result: [NSManagedObject], _ movies: [Movie]) -> Void) {
         let context = appDelegate?.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Film")
         request.returnsObjectsAsFaults = false
         do {
             if let result = try context?.fetch(request) as? [NSManagedObject] {
-            handle(result)
+                var movies = [Movie]()
+                for res in result {
+                    movies.append(Movie(dict: [ "title": res.value(forKey: "name") as AnyObject,
+                                  "overview": res.value(forKey: "overview") as AnyObject,
+                                  "genre_ids": res.value(forKey: "genres") as AnyObject,
+                                  "poster_path": res.value(forKey: "imageURL") as AnyObject,
+                                  "back": res.value(forKey: "imagebackdrop") as AnyObject,
+                                  "backdrop_path": res.value(forKey: "backdropURL") as AnyObject,
+                                  "vote_average": res.value(forKey: "vote") as AnyObject,
+                                  "release_date": res.value(forKey: "date") as AnyObject,
+                                  "id": res.value(forKey: "id") as AnyObject,
+                                  "image": res.value(forKey: "image") as AnyObject]))
+                }
+            handle(result, movies)
             }
         } catch let error {
             print(error.localizedDescription)

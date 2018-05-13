@@ -238,8 +238,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                     <state key="normal" title="Add to favorite"/>
                                                     <connections>
-                                                        <action selector="AddButton:" destination="0NU-gs-Cgv" eventType="touchUpInside" id="JJY-FE-4ay"/>
-                                                        <action selector="AddButton:" destination="0NU-gs-Cgv" eventType="touchUpOutside" id="dZi-Dx-3r2"/>
+                                                        <action selector="addButton:" destination="0NU-gs-Cgv" eventType="touchUpInside" id="ANT-Qd-nNH"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
